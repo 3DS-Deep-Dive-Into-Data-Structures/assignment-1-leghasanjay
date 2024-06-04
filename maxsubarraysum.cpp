@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main()
-{
-
+int main(){
     int n, a, b;
     cin >> n >> a >> b;
     multiset<int> s;
@@ -13,14 +11,7 @@ int main()
         cin >> x;
         s.insert(x);
     }
-
-    auto it = s.begin();
     int count = 0;
-    // while(count<s.size()){
-    //     it++;
-    //     count++;
-    // }
-    // count=0;
     auto itr = s.begin();
     while (count < n - (b - a) - 1)
     {
