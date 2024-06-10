@@ -1,30 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main(){
-    int n, a, b;
+#define ll long long
+ int main() {
+    ll n, a, b;
     cin >> n >> a >> b;
-    multiset<int> s;
-
-    for (int i = 0; i < n; i++)
-    {
-        int x;
+     vector<ll> psum(n+1,0);
+    for (int i = 1; i <= n; ++i) {
+        ll x;
         cin >> x;
-        s.insert(x);
+        psum[i] = psum[i-1] + x;
     }
-    int count = 0;
-    auto itr = s.begin();
-    while (count < n - (b - a) - 1)
-    {
-        count++;
-        itr++;
-    }
-    int sum = 0;
-    while (itr != s.end())
-    {
-        sum += *itr;
-        itr++;
-    }
-    cout << sum << endl;
 
+    ll mxsum=*max_element(psum.begin()+ a , psum.begin()+ (b+1));
+    ll i=1;
+    while(a!=b+1){
+
+        if((a+i)!=n+1){
+        mxsum=max(mxsum,psum[a+i]-psum[i]);
+        i++;
+        }
+        else{
+            a++;
+            i=1;
+        }
+    }
+    cout<<mxsum<<endl;
     return 0;
 }
+
+
+    
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
