@@ -1,31 +1,70 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define ll long long
- int main() {
-    ll n, a, b;
+#define int long long
+#define vi vector<int>
+#define vii vector<pair<int,int>>
+#define pii pair<int,int>
+#define pb push_back
+#define For(i, a, n) for (int i = a; i < n; i++)
+#define all(x) ((x).begin(), (x).end())
+#define si set<int>
+#define msi multiset<int,int>
+ 
+void solve()
+{
+    int n,a,b;
     cin >> n >> a >> b;
-     vector<ll> psum(n+1,0);
-    for (int i = 1; i <= n; ++i) {
-        ll x;
-        cin >> x;
-        psum[i] = psum[i-1] + x;
+    vi v(n+1);
+    For(i,1,n+1)
+    {
+        cin >> v[i];
     }
-
-    ll mxsum=*max_element(psum.begin()+ a , psum.begin()+ (b+1));
-    ll i=1;
-    while(a!=b+1){
-
-        if((a+i)!=n+1){
-        mxsum=max(mxsum,psum[a+i]-psum[i]);
-        i++;
-        }
-        else{
-            a++;
-            i=1;
-        }
+    vi pre(n+1,0);
+    pre[0]=0;
+    For(i,1,n+1) pre[i]=pre[i-1]+v[i];
+    deque<int> dq;
+    vi add(n+1,0);
+    int sum=0;
+    dq.push_back(pre[a]);
+    for(int i=a+1;i<=b;i++)
+    {
+        while(!(dq.empty()) && dq.back()<pre[i]) dq.pop_back();
+        dq.push_back(pre[i]);
     }
-    cout<<mxsum<<endl;
-    return 0;
+    // add[a]=max(0ll,sum);
+    add[a]=dq.front();
+    for(int i=b+1;i<=n;i++)
+    {
+        if(dq.front() == pre[i-b+a-1]) dq.pop_front();
+        while(!(dq.empty()) && dq.back()<pre[i]) dq.pop_back();
+        dq.push_back(pre[i]);
+        add[i-b+a]=dq.front();
+    }
+    int m = pre[n];
+    for(int i=n;i>=n-b+a+1;i--)
+    {
+        m=max(m,pre[i]);
+        add[i]=m;
+    }
+    int ans=pre[a];
+    for(int i=0;(i+a)<=n;i++)
+    {
+        // cout << ans << "\n";
+        ans = max(ans,add[i+a]-pre[i]);
+    }
+    cout << ans;
+}
+ 
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t=1;
+    // cin >> t;
+    while(t--)
+    {
+        solve();
+    }
 }
 
 
