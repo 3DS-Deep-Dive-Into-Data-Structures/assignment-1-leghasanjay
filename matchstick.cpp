@@ -10,7 +10,6 @@ void buildSparseTable(int arr[], int n)
 {  
   
       int x= ceil(log2(n))+1;
-      // int LOGn = 31 - (__builtin_clz(n));
 
   maxtable.assign(n,vector<int>(x + 1,0));
   mintable.assign(n,vector<int>(x + 1,0));
@@ -31,8 +30,6 @@ void buildSparseTable(int arr[], int n)
 
 int minquery(int L, int R) 
 {
-  // L--;
-  // R--;
     int j = (int)log2(R - L + 1); 
    return min(mintable[L][j],mintable[R - (1<<j)+1][j]);
 }
@@ -68,14 +65,11 @@ int main()
     if(maxquery(0,l-1)>maxquery(r+1,n-1)) t3=(d)maxquery(0,l-1);
     else t3=(d)maxquery(r+1,n-1);
        t1=(d)minquery(--l,++r);
-      //  t2=(d)maxquery(--l,++r);
     }
 
     else{
 
        t3=(d)maxquery(0,l-1);
-        // t1=(d)minquery(--l,r);
-        //   t2=(d)maxquery(--l,r);
     }
     }
     else{
@@ -83,22 +77,16 @@ int main()
       if(r<n-1){
    
      t3=(d)maxquery(r+1,n-1);
-      //  t1=(d)minquery(l,++r);
-      //   t2=(d)maxquery(l,++r);
     }
 
     else{
 
        t3=0.0;
-        // t1=(d)minquery(l,r);
-        //  t2=(d)maxquery(l,r);
     }
     }
 
     d ans = t1 + max((t2 - t1) / 2, t3);
-       printf("%.1f\n",ans);
-     //cout<<t1<<t2<<t3;
-    
+       printf("%.1f\n",ans); 
   }
 
   return 0;
